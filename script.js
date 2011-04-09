@@ -66,7 +66,7 @@ function loadContacts() {
     out.innerHTML = '<img src="throbber.gif" />Loading contacts...';
 
     // FIXME set maximum
-    query.setMaxResults(50);
+    query.setMaxResults(5000);
     contactsService.getContactFeed(query, handleContacts, handleError);
 }
 
