@@ -154,14 +154,13 @@ function applyChanges(){
     }
 }
 
-
 /**
  * Clean the given phone number
  */
 function phoneClean(number){
     var prefix = countryprefix+' ';
 
-    number = number.replace(/[\.\-_]/g,' '); // spaces only
+    number = number.replace(/[\.\-_()\[\]/\\]/g,' '); // spaces only
     number = number.replace(/^00/,'+');      // 00 is the plus sign
     number = number.replace(/^0/,prefix);    // add prefix
     number = number.replace(/  +/g,' ');     // single spaces only
@@ -170,8 +169,23 @@ function phoneClean(number){
     var ctry = RECOUNTRYCODE.exec(number);
     if(ctry && ctry.length){
         ctry = ctry[1];
-        var re = new RegExp('^(\\+'+ctry+' ?'+AREAPREFIX[ctry]+' ?)');
+
+        // was an extension marked in the number? remeber it
+        var ext = number.match(/ ([0-9][0-9][0-9]?)$/);
+        if(ext) ext = ext[1];
+
+        // we have a code - whitespace format on our own
+        number = number.replace(/ +/g,'');
+
+        // apply area code format
+        var re = new RegExp('^(\\+'+ctry+AREAPREFIX[ctry]+')');
         number = number.replace(re,'+'+ctry+' $2 ');
+
+        // reapply extension
+        if(ext){
+            re = new RegExp(ext+'$');
+            number = number.replace(re,' '+ext);
+        }
     }
     return number;
 }
