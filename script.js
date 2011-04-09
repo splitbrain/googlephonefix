@@ -48,8 +48,8 @@ function loadContacts() {
     var out = document.getElementById('output');
     out.innerHTML = '<img src="throbber.gif" />Loading contacts...';
 
-    // Set the maximum of the result set to be 5
-    query.setMaxResults(5);
+    // FIXME set maximum
+    query.setMaxResults(50);
     contactsService.getContactFeed(query, handleContacts, handleError);
 }
 
@@ -62,17 +62,63 @@ function handleContacts(result){
     var out = document.getElementById('output');
     out.innerHTML = '';
 
+    var table = document.createElement('table');
+    out.appendChild(table);
+
     var entries = result.feed.entry;
     for (var i = 0; i < entries.length; i++) {
         var contactEntry = entries[i];
-        var emailAddresses = contactEntry.getEmailAddresses();
 
-        for (var j = 0; j < emailAddresses.length; j++) {
-            var emailAddress = emailAddresses[j].getAddress();
+        try {
+            var name = contactEntry.getName().getFullName().getValue();
+        }catch(err){
+            continue; //skip entries without a name
+        }
 
-            out.innerHTML += emailAddress +'<br />';
+        var numbers = contactEntry.getPhoneNumbers();
+        if(numbers.length == 0) continue; //skip entries without phone
+
+        for (var j = 0; j < numbers.length; j++) {
+            var th, tr, td, tx;
+
+            tr = document.createElement('tr');
+
+            th = document.createElement('th');
+            th.innerText = name;
+            tr.appendChild(th);
+
+            td = document.createElement('td');
+            td.innerText = numbers[j].getValue();
+            tr.appendChild(td);
+
+            td = document.createElement('td');
+            tx = document.createElement('input');
+            tx.value = phoneClean(numbers[j].getValue());
+            // remember tree references in the DOM object
+            tx.contactEntry = contactEntry;
+            tx.phoneNumber  = numbers[j];
+            td.appendChild(tx);
+            tr.appendChild(td);
+
+            table.appendChild(tr);
+
+            console.dir(numbers[j]);
         }
     }
+}
+
+/**
+ * Clean the given phone number
+ */
+function phoneClean(number){
+    var prefix = '+49 ';
+
+    number = number.replace(/[\.\-_]/g,' '); // spaces only
+    number = number.replace(/  +/g,' ');     // single spaces only
+    number = number.replace(/^00/,'+');      // 00 is the plus sign
+    number = number.replace(/^0/,prefix);    // add prefix
+
+    return number;
 }
 
 /**
