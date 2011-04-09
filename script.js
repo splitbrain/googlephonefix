@@ -101,11 +101,42 @@ function handleContacts(result){
             tr.appendChild(td);
 
             table.appendChild(tr);
+        }
+    }
 
-            console.dir(numbers[j]);
+    var btn = document.createElement('button');
+    btn.innerText = 'Apply all Changes';
+    btn.id = 'applybutton';
+    btn.onclick = applyChanges;
+
+    out.appendChild(btn);
+}
+
+/**
+ * Go through all fields and save the phone number back to Google Contacts
+ */
+function applyChanges(){
+    var out = document.getElementById('output');
+    var fields = out.getElementsByTagName('input');
+
+    // disable the apply button
+    document.getElementById('applybutton').style.display = 'none';
+
+    // go through all phone number entries
+    for(i=0; i<fields.length; i++){
+        if(fields[i].value == fields[i].phoneNumber.getValue()){
+            //phone numbers are the same, we're done
+            fields[i].className = 'done';
+        }else{
+            fields[i].phoneNumber.setValue(fields[i].value);
+            fields[i].contactEntry.updateEntry(function(){
+                fields[i].className = 'done';
+            }, handleError);
+            return; // FIXME we only do the first one now
         }
     }
 }
+
 
 /**
  * Clean the given phone number

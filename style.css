@@ -16,3 +16,7 @@ div.error {
     clear: left;
     padding: 2em;
 }
+
+input.done {
+    background-color: #0f7;
+}
