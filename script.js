@@ -166,10 +166,13 @@ function phoneClean(number){
     number = number.replace(/^0/,prefix);    // add prefix
     number = number.replace(/  +/g,' ');     // single spaces only
 
-    // separate German area codes
-    re_49 = new RegExp('^(\\+49 ?'+PREFIX_49+' ?)');
-    number = number.replace(re_49,'+49 $2 ');
-
+    // see if we have area codes for that number
+    var ctry = RECOUNTRYCODE.exec(number);
+    if(ctry && ctry.length){
+        ctry = ctry[1];
+        var re = new RegExp('^(\\+'+ctry+' ?'+AREAPREFIX[ctry]+' ?)');
+        number = number.replace(re,'+'+ctry+' $2 ');
+    }
     return number;
 }
 
