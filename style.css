@@ -1,9 +1,16 @@
 body {
     font-family: sans-serif;
+    color: #333;
+    background-color: #fff;
 }
 
 img.logo {
     float: left;
+    margin-right: 2em;
+}
+
+h1 {
+    font-size: 120%;
 }
 
 div.error {
@@ -19,4 +26,9 @@ div.error {
 
 input.done {
     background-color: #0f7;
+}
+
+#about {
+    width: 50em;
+    font-size: 90%;
 }
