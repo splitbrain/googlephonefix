@@ -1,0 +1,18 @@
+body {
+    font-family: sans-serif;
+}
+
+img.logo {
+    float: left;
+}
+
+div.error {
+    margin: 0.5em 2em;
+    border: #f00 1px solid;
+    text-align: center;
+}
+
+#output {
+    clear: left;
+    padding: 2em;
+}
