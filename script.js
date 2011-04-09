@@ -5,6 +5,7 @@ google.setOnLoadCallback(main);
 
 var contactsService = null;
 var contactsServiceScope = 'https://www.google.com/m8/feeds';
+var countryprefix = '';
 
 /**
  * The init function that initializes everything
@@ -23,8 +24,8 @@ function main() {
         // initialize the global contact service
         contactsService = new google.gdata.contacts.ContactsService('splitbrain.org-phonefix-1.0');
 
-        // load the contacts
-        loadContacts();
+        // show the init screen
+        startGUI();
     }else{
         // make a login button
         var btn = document.createElement('button');
@@ -35,6 +36,22 @@ function main() {
         hdr.innerHTML = '';
         hdr.appendChild(btn);
     }
+}
+
+function startGUI() {
+    var out = document.getElementById('output');
+    out.innerHTML = '<p><label for="countryprefix">Default Country Prefix: </label>'+
+                    '<input type="text" id="countryprefix" value="+49" size="3" /></p>';
+    var btn = document.createElement('button');
+    btn.innerText = 'Load contacts and preview fixed contacts...';
+    btn.onclick = function(){
+        // set global prefix
+        countryprefix = document.getElementById('countryprefix').value;
+
+        // load the contacts
+        loadContacts();
+    }
+    out.appendChild(btn);
 }
 
 /**
@@ -142,7 +159,7 @@ function applyChanges(){
  * Clean the given phone number
  */
 function phoneClean(number){
-    var prefix = '+49 ';
+    var prefix = countryprefix+' ';
 
     number = number.replace(/[\.\-_]/g,' '); // spaces only
     number = number.replace(/^00/,'+');      // 00 is the plus sign
