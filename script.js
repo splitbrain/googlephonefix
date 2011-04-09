@@ -114,9 +114,13 @@ function phoneClean(number){
     var prefix = '+49 ';
 
     number = number.replace(/[\.\-_]/g,' '); // spaces only
-    number = number.replace(/  +/g,' ');     // single spaces only
     number = number.replace(/^00/,'+');      // 00 is the plus sign
     number = number.replace(/^0/,prefix);    // add prefix
+    number = number.replace(/  +/g,' ');     // single spaces only
+
+    // separate German area codes
+    re_49 = new RegExp('^(\\+49 ?'+PREFIX_49+' ?)');
+    number = number.replace(re_49,'+49 $2 ');
 
     return number;
 }
