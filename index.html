@@ -3,7 +3,15 @@
     <meta charset="utf-8" />
     <title>Google Contacts Phone Number Fixer</title>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="areaprefix.js"></script>
+    <script type="text/javascript" src="http://closure-library.googlecode.com/svn/trunk/closure/goog/base.js"></script>
+    <script type="text/javascript">
+        goog.require('goog.proto2.ObjectSerializer');
+    </script>
+    <script type="text/javascript" src="http://libphonenumber.googlecode.com/svn/trunk/javascript/i18n/phonenumbers/phonemetadata.pb.js"></script>
+    <script type="text/javascript" src="http://libphonenumber.googlecode.com/svn/trunk/javascript/i18n/phonenumbers/phonenumber.pb.js"></script>
+    <script type="text/javascript" src="http://libphonenumber.googlecode.com/svn/trunk/javascript/i18n/phonenumbers/metadata.js"></script>
+    <script type="text/javascript" src="http://libphonenumber.googlecode.com/svn/trunk/javascript/i18n/phonenumbers/phonenumberutil.js"></script>
+
     <script type="text/javascript" src="script.js"></script>
     <link type="text/css" rel="stylesheet" href="style.css" />
 </head>
@@ -20,9 +28,9 @@
 <p>
 <b>About:</b><br />
 This tool connects with your Google Contacts account. It loads the phone numbers
-of all contacts and reformats them. Country prefixes are added, dashes and dots
-removed and area codes from some countries are separated from the rest of the
-number.
+of all contacts and reformats them. This version uses Google's
+<a href="https://code.google.com/p/libphonenumber/">libphonenumber</a> to format
+the numbers.
 </p>
 
 <p>

@@ -40,8 +40,8 @@ function main() {
 
 function startGUI() {
     var out = document.getElementById('output');
-    out.innerHTML = '<p><label for="countryprefix">Default Country Prefix: </label>'+
-                    '<input type="text" id="countryprefix" value="+49" size="3" /></p>';
+    out.innerHTML = '<p><label for="countryprefix">Default Country Code: </label>'+
+                    '<input type="text" id="countryprefix" value="DE" size="3" /></p>';
     var btn = document.createElement('button');
     btn.innerText = 'Load contacts and preview fixed contacts...';
     btn.onclick = function(){
@@ -176,36 +176,14 @@ function applyChanges(){
  * Clean the given phone number
  */
 function phoneClean(number){
-    var prefix = countryprefix+' ';
-
-    number = number.replace(/[\.\-_()\[\]/\\]/g,' '); // spaces only
-    number = number.replace(/^00/,'+');      // 00 is the plus sign
-    number = number.replace(/^0/,prefix);    // add prefix
-    number = number.replace(/  +/g,' ');     // single spaces only
-
-    // see if we have area codes for that number
-    var ctry = RECOUNTRYCODE.exec(number);
-    if(ctry && ctry.length){
-        ctry = ctry[1];
-
-        // was an extension marked in the number? remeber it
-        var ext = number.match(/ ([0-9][0-9][0-9]?)$/);
-        if(ext) ext = ext[1];
-
-        // we have a code - whitespace format on our own
-        number = number.replace(/ +/g,'');
-
-        // apply area code format
-        var re = new RegExp('^(\\+'+ctry+AREAPREFIX[ctry]+')');
-        number = number.replace(re,'+'+ctry+' $2 ');
-
-        // reapply extension
-        if(ext){
-            re = new RegExp(ext+'$');
-            number = number.replace(re,' '+ext);
-        }
+    var PNF = i18n.phonenumbers.PhoneNumberFormat;
+    var phoneUtil = i18n.phonenumbers.PhoneNumberUtil.getInstance();
+    try {
+        var numberObj = phoneUtil.parseAndKeepRawInput(number, countryprefix);
+    } catch (e) {
+        return number;
     }
-    return number;
+    return phoneUtil.format(numberObj,PNF.INTERNATIONAL);
 }
 
 /**
