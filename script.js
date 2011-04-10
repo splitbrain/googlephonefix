@@ -136,20 +136,38 @@ function applyChanges(){
     var out = document.getElementById('output');
     var fields = out.getElementsByTagName('input');
 
-    // disable the apply button
-    document.getElementById('applybutton').style.display = 'none';
+    // disable the apply button and scroll up
+    var btn = document.getElementById('applybutton');
+    if(btn.style.display != 'none'){
+        btn.style.display = 'none';
+        document.getElementById('header').scrollIntoView();
+    }
 
     // go through all phone number entries
     for(i=0; i<fields.length; i++){
-        if(fields[i].value == fields[i].phoneNumber.getValue()){
+        if(fields[i].className == 'done' ||
+           fields[i].className == 'pending' ||
+           fields[i].className == 'failed' ){
+            continue;
+        }else if(fields[i].value == fields[i].phoneNumber.getValue()){
             //phone numbers are the same, we're done
             fields[i].className = 'done';
         }else{
+            fields[i].className = 'pending';
             fields[i].phoneNumber.setValue(fields[i].value);
             fields[i].contactEntry.updateEntry(function(){
                 fields[i].className = 'done';
-            }, handleError);
-            return; // FIXME we only do the first one now
+                fields[i].scrollIntoView();
+                // run this function again, but no recursion:
+                window.setTimeout(applyChanges,30);
+            }, function(e){
+                fields[i].className = 'failed';
+                fields[i].title = e;
+                fields[i].scrollIntoView();
+                // run this function again, but no recursion:
+                window.setTimeout(applyChanges,30);
+            });
+            return;
         }
     }
 }
@@ -198,5 +216,5 @@ function handleError(error){
     var err = document.createElement('div');
     err.className = 'error';
     err.innerText = error;
-    out.appendChild(error);
+    out.appendChild(err);
 }

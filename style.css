@@ -25,7 +25,17 @@ div.error {
 }
 
 input.done {
+    background-image: none;
     background-color: #0f7;
+}
+
+input.failed {
+    background-image: none;
+    background-color: #f77;
+}
+
+input.pending {
+    background: #fff url(throbber.gif) center right no-repeat;
 }
 
 #about {
