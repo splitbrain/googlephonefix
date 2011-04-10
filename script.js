@@ -166,7 +166,7 @@ function applyChanges(){
                 fields[i].scrollIntoView();
                 // run this function again, but no recursion:
                 window.setTimeout(applyChanges,30);
-            });
+            }, { 'etag': '*' } ); // subsequent phone changes, change etag
             return;
         }
     }
