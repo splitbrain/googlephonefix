@@ -29,7 +29,7 @@ function main() {
     }else{
         // make a login button
         var btn = document.createElement('button');
-        btn.innerText = 'Logout';
+        btn.innerText = 'Login to Google Contacts';
         btn.onclick   = function(){
             var token = google.accounts.user.login(contactsServiceScope);
         };
