@@ -1,68 +1,43 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta charset="utf-8" />
-    <title>Google Contacts Phone Number Fixer</title>
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="areaprefix.js"></script>
-    <script type="text/javascript" src="script.js"></script>
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        (function() {
-            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
-            s.type = 'text/javascript';
-            s.async = true;
-            s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
-            t.parentNode.insertBefore(s, t);
-        })();
-    /* ]]> */
-    </script>
-    <link type="text/css" rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <title>Google Contacts Phone Number & Email Address Fixer</title>
+  <script src="http://www.google.com/jsapi"></script>
+  <script src="areaprefix.js"></script>
+  <script src="script.js"></script>
+  <script>
+  /* <![CDATA[ */
+    (function() {
+      var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+      s.type = 'text/javascript';
+      s.async = true;
+      s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+      t.parentNode.insertBefore(s, t);
+    })();
+  /* ]]> */
+  </script>
+  <link type="text/css" rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<img src="contacts.gif" class="logo" />
-<h1>Phone Number Fixer</h1>
-<div id="header"></div>
-
-<div id="output"></div>
-
-
-<div id="about">
-<p>
-<b>About:</b><br />
-This tool connects with your Google Contacts account. It loads the phone numbers
-of all contacts and reformats them. Country prefixes are added, dashes and dots
-removed and area codes from some countries are separated from the rest of the
-number.
-</p>
-
-<p>
-<b>Warranty:</b><br />
-A preview of how the fixed numbers will look like is shown before any action is
-taken. Creating a backup of your contacts is recommended before running this
-application. <b>Absolutely no Warranties are given.</b> Use at your own risk.
-</p>
-
-<p>
-<b>Security:</b><br />
-No data is transferred to any 3rd party - the whole application is running
-within your browser and Google's API servers. You are welcome to
-<a href="https://github.com/splitbrain/googlephonefix">download the sources</a>
-and run it on your own computer.
-</p>
-
-<p>
-<div style="float: right">
-<a class="FlattrButton" style="display:none;" href="http://splitbrain.github.com/googlephonefix/"></a>
-<noscript><a href="http://flattr.com/thing/165761/Google-Contacts-Phone-Number-Fixer" target="_blank">
-<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
-</div>
-
-<b>Me:</b><br />
-This tool was written by <a href="http://www.splitbrain.org">Andreas Gohr</a>.
-See LICENSE file for licensing terms.
-</div>
-
+  <img src="contacts.gif" class="logo">
+  <h1>Phone Number &amp; Email Address Fixer</h1>
+  <div id="header"></div>
+  <div id="output"></div>
+  <div id="about">
+    <p><b>About:</b><br>
+    This tool connects with your Google Contacts account. It loads the data of all contacts, reformats the phone numbers, and checks the email addresses. Phone numbers get country prefixes added, dashes and dots removed and area codes from some countries are separated from the rest of the number. The email addresses are transformed to lowercase and checked, if each one is actually valid.</p>
+    <p><b>Warranty:</b><br>
+    A preview of how the fixed numbers and email addresses will look like is shown before any action is taken. Creating a backup of your contacts is recommended before running this application. <strong>Absolutely no warranties are given.</strong> Use at your own risk.
+  </p>
+  <p><b>Security:</b><br>
+  No data is transferred to any 3rd party - the whole application is running within your browser and the Google API servers. You are welcome to <a href="https://github.com/splitbrain/googlephonefix">download the sources</a> and run it on your own computer.</p>
+  <p>
+  <b>Authors:</b><br>
+  This tool was written by <a href="http://www.splitbrain.org">Andreas Gohr</a> and was updated by <a href="http://fabian-beiner.de">Fabian Beiner</a>. See LICENSE file for licensing terms.</p>
+  <div style="float: right">
+    <a class="FlattrButton" style="display:none;" href="http://splitbrain.github.com/googlephonefix/"></a>
+    <noscript><a href="http://flattr.com/thing/165761/Google-Contacts-Phone-Number-Fixer" target="_blank"><img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0"></a></noscript>
+  </div>
 </body>
 </html>
