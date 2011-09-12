@@ -124,7 +124,7 @@ function handleContacts(result) {
 
             if (tx.value != numbers[j].getValue()) {
                 if (x % 2) {
-                    tr.style.backgroundColor = "#ccc";
+                    tr.className = 'even';
                 }
                 table.appendChild(tr);
                 x = x + 1;
@@ -155,7 +155,7 @@ function handleContacts(result) {
 
             if (tx.value != emails[j].getAddress()) {
                 if (x % 2) {
-                    tr.style.backgroundColor = "#ccc";
+                    tr.className = 'even';
                 }
                 table.appendChild(tr);
                 x = x + 1;
