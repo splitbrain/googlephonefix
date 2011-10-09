@@ -24,6 +24,7 @@ div.error {
     padding: 2em;
 }
 
+
 input.done {
     background-image: none;
     background-color: #0f7;
@@ -36,6 +37,15 @@ input.failed {
 
 input.pending {
     background: #fff url(throbber.gif) center right no-repeat;
+}
+
+tr.even {
+    background-color: #efefef;
+}
+
+tr input {
+    border: 1px #aaa solid;
+    width: 24em;
 }
 
 #about {

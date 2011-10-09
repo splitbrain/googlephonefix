@@ -6,6 +6,7 @@ google.setOnLoadCallback(main);
 var contactsService = null;
 var contactsServiceScope = 'https://www.google.com/m8/feeds';
 var countryprefix = '';
+var fixemails = true;
 
 /**
  * The init function that initializes everything
@@ -43,12 +44,22 @@ function main() {
 
 function startGUI() {
     var out = document.getElementById('output');
-    out.innerHTML = '<p><label for="countryprefix">Default Country Prefix: </label>' + '<input type="text" id="countryprefix" value="+49" size="3" /></p>';
+    out.innerHTML = '<p><label for="countryprefix">Default Country Prefix: </label>' +
+                    '<input type="text" id="countryprefix" value="+49" size="3" /> ' +
+                    '<input type="checkbox" checked="checked" id="fixemails" />' +
+                    '<label for="fixemails">Fix Emails</label></p>';
     var btn = document.createElement('button');
     btn.innerHTML = 'Load contacts and preview fixed contacts...';
     btn.onclick = function() {
         // set global prefix
         countryprefix = document.getElementById('countryprefix').value;
+
+        // set global email pref
+        if(document.getElementById('fixemails').checked){
+            fixemails = true;
+        }else{
+            fixemails = false;
+        }
 
         // load the contacts
         loadContacts();
@@ -124,14 +135,14 @@ function handleContacts(result) {
 
             if (tx.value != numbers[j].getValue()) {
                 if (x % 2) {
-                    tr.style.backgroundColor = "#ccc";
+                    tr.className = 'even';
                 }
                 table.appendChild(tr);
                 x = x + 1;
             }
         }
 
-        for (var j = 0; j < emails.length; j++) {
+        if(fixemails) for (var j = 0; j < emails.length; j++) {
             var th, tr, td, tx;
 
             tr = document.createElement('tr');
@@ -155,7 +166,7 @@ function handleContacts(result) {
 
             if (tx.value != emails[j].getAddress()) {
                 if (x % 2) {
-                    tr.style.backgroundColor = "#ccc";
+                    tr.className = 'even';
                 }
                 table.appendChild(tr);
                 x = x + 1;
@@ -258,8 +269,7 @@ function phoneClean(number) {
             number = number.replace(re, ' ' + ext);
         }
     }
-    // Return the trimmed number.
-    return number.replace(/^\s+|\s+$/g, '');
+    return number;
 }
 
 /**
@@ -271,8 +281,8 @@ function mailClean(mail) {
     if (mail.search(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) == -1) {
         return "";
     }
-    // Return the trimmed email address.
-    return mail.replace(/^\s+|\s+$/g, '');
+
+    return mail;
 }
 
 /**
