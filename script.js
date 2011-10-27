@@ -245,6 +245,7 @@ function phoneClean(number) {
 
     number = number.replace(/[\.\-_()\[\]/\\]/g, ' '); // spaces only
     number = number.replace(/^00/, '+'); // 00 is the plus sign
+    number = number.replace(/^49/, '+49'); // 49 without plus sign
     number = number.replace(/^0/, prefix); // add prefix
     number = number.replace(/  +/g, ' '); // single spaces only
     // see if we have area codes for that number
