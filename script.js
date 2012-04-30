@@ -245,6 +245,7 @@ function phoneClean(number) {
 
     number = number.replace(/[\.\-_()\[\]/\\]/g, ' '); // spaces only
     number = number.replace(/^00/, '+'); // 00 is the plus sign
+    number = number.replace(/^49/, '+49'); // 49 without plus sign
     number = number.replace(/^0/, prefix); // add prefix
     number = number.replace(/  +/g, ' '); // single spaces only
     // see if we have area codes for that number
@@ -269,7 +270,8 @@ function phoneClean(number) {
             number = number.replace(re, ' ' + ext);
         }
     }
-    return number;
+    // Return the trimmed number.
+    return number.replace(/^\s+|\s+$/g, '');
 }
 
 /**
@@ -281,8 +283,8 @@ function mailClean(mail) {
     if (mail.search(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i) == -1) {
         return "";
     }
-
-    return mail;
+    // Return the trimmed email address.
+    return mail.replace(/^\s+|\s+$/g, '');
 }
 
 /**
